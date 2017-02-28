@@ -1,0 +1,48 @@
+{
+  "name": "graphql-resolve-batch",
+  "scripts": {
+    "format": "prettier 'src/**/*.js' --write --print-width 80 --tab-width 2 --single-quote --trailing-comma all",
+    "lint": "eslint 'src/**/*.js'",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "precommit": "npm run format && git add && npm run lint && npm test"
+  },
+  "precommit": "precommit",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": 4
+          }
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ]
+  },
+  "peerDependencies": {
+    "graphql": ">=0.6.0 <1.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
+    "babel-preset-env": "^1.1.10",
+    "babel-preset-es2015": "^6.22.0",
+    "eslint": "^3.16.1",
+    "jest": "^19.0.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "^0.19.0"
+  }
+}
