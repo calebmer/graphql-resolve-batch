@@ -1,5 +1,7 @@
 # GraphQL Batch Resolver
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/calebmer/graphql-resolve-batch.svg)](https://greenkeeper.io/)
+
 An alternative mechanism for batching the resolution of GraphQL fields.
 
 ```js
