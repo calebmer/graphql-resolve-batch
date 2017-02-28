@@ -1,6 +1,8 @@
 # GraphQL Batch Resolver
 
-An alternative mechanism for batching the resolution of GraphQL fields.
+An alternative mechanism to [`dataloader`][] for batching the resolution of GraphQL fields.
+
+[`dataloader`]: https://github.com/facebook/dataloader
 
 ```js
 import { GraphQLObjectType, GraphQLString } from 'graphql';
@@ -33,7 +35,7 @@ const QueryType = new GraphQLObjectType({
 npm install --save graphql graphql-batch-resolve
 ```
 
-[`graphql`]: https://www.npmjs.com/package/graphql
+[`graphql`]: https://github.com/graphql/graphql-js
 
 ## Why?
 
