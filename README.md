@@ -105,10 +105,10 @@ Is easy to optimize this GraphQL query with `dataloader` because assumedly the v
 {
   users(limit: 5) {
     name
-    friends(limit: 5) {
+    friends1: friends(limit: 5) {
       name
     }
-    friends(limit: 5, offset: 5) {
+    friends2: friends(limit: 5, offset: 5) {
       name
     }
   }
@@ -136,7 +136,38 @@ This package offers an alternative to the `dataloader` batching strategy. This p
 }
 ```
 
-Here we would only have *4* executions instead of 155. One for the root field, one for the first `friends` field, one for the second `friends` field, and so on. This is a powerful alternative to `dataloader` in a case where `dataloader` falls short.
+Here we would only have *4* executions instead of 156. One for the root field, one for the first `friends` field, one for the second `friends` field, and so on. This is a powerful alternative to `dataloader` in a case where `dataloader` falls short.
+
+## How?
+
+A batch resolver will run once per GraphQL *field*. So if we assume that you are using a batch resolver on your `friends` field and a frontend engineer writes a query like this:
+
+```graphql
+{
+  users(limit: 5) {
+    name
+    friends(limit: 5) {
+      name
+      friends(limit: 5) {
+        name
+        friends(limit: 5) {
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+Every `friends(limit: 5)` field will run exactly one time. How does this work? A GraphQL.js resolver has the following signature:
+
+```js
+(source, args, context, info) => fieldValue
+```
+
+To batch together calls to this function by field, `graphql-resolve-batch` defers the resolution until the next tick while synchronously bucketing `source` values together using the field GraphQL.js AST information from `info`. On the next tick the function you passed into `createBatchResolver` is called with all of the sources that were bucketed in the last tick.
+
+The implementation is very similar to the `dataloader` implementation. Except `graphql-resolve-batch` takes a more opionated approach to how batching should be implemented in GraphQL whereas `dataloader` is less opionated in how it batches executions together.
 
 ## When do I use `dataloader` and when do I use `graphql-resolve-batch`?
 
