@@ -6,8 +6,7 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "ci": "npm run format && git diff --exit-code && npm run lint && npm test",
-    "build": "rm -rf lib && babel src --out-dir lib",
-    "benchmark": "npm run build && echo && node lib/batch.benchmark.js && echo"
+    "build": "rm -rf lib && babel src --out-dir lib"
   },
   "babel": {
     "presets": [
@@ -42,7 +41,6 @@
     "babel-jest": "^19.0.0",
     "babel-preset-env": "^1.1.10",
     "babel-preset-es2015": "^6.22.0",
-    "benchmark": "^2.1.3",
     "eslint": "^3.16.1",
     "graphql": "^0.9.1",
     "jest": "^19.0.2",
