@@ -82,7 +82,7 @@ We have an N+1 problem! For every user we are executing a database query. This i
 }
 ```
 
-This turns into 155 queries!
+This turns into 156 queries!
 
 The canonical solution to this problem is to use [`dataloader`][] which supposedly implements a pattern that Facebook uses to optimize their GraphQL API in JavaScript. `dataloader` is excellent for batching queries with a simple key. For example this query:
 
