@@ -1,6 +1,6 @@
 # GraphQL Batch Resolver
 
-An alternative mechanism to [`dataloader`][] for batching the resolution of GraphQL fields.
+A method for batching the resoluition of GraphQL fields as an alternative to [`dataloader`][].
 
 [`dataloader`]: https://github.com/facebook/dataloader
 
