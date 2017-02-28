@@ -1,5 +1,31 @@
 {
   "name": "graphql-resolve-batch",
+  "version": "1.0.0",
+  "description": "A GraphQL batching model which groups execution by GraphQL fields.",
+  "author": "Caleb Meredith <calebmeredith8@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/calebmer/graphql-resolve-batch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebmer/graphql-resolve-batch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/calebmer/graphql-resolve-batch/issues"
+  },
+  "keywords": [
+    "graphql",
+    "batch",
+    "resolve",
+    "field"
+  ],
+  "main": "lib/batch.js",
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "lib/batch.js",
+    "src/batch.js"
+  ],
   "scripts": {
     "preversion": "npm run ci",
     "prepublish": "npm run build",
