@@ -6,7 +6,7 @@ A method for batching the resoluition of GraphQL fields as an alternative to [`d
 
 ```js
 import { GraphQLObjectType, GraphQLString } from 'graphql';
-import { createBatchResolver } from 'graphql-batch-resolve';
+import { createBatchResolver } from 'graphql-resolve-batch';
 
 const UserType = new GraphQLObjectType({
   // ...
@@ -29,10 +29,10 @@ const QueryType = new GraphQLObjectType({
 
 ## Installation
 
-`graphql-batch-resolve` has a peer dependency on `graphql`, so make sure you have installed that package as well.
+`graphql-resolve-batch` has a peer dependency on `graphql`, so make sure you have installed that package as well.
 
 ```
-npm install --save graphql graphql-batch-resolve
+npm install --save graphql graphql-resolve-batch
 ```
 
 [`graphql`]: https://github.com/graphql/graphql-js
