@@ -1,6 +1,6 @@
 # GraphQL Batch Resolver
 
-A method for batching the resoluition of GraphQL fields as an alternative to [`dataloader`][].
+A method for batching the resoluition of GraphQL fields as an alternative to [`dataloader`][] that works with both [GraphQL.js][] and [`graphql-tools`][].
 
 [`dataloader`]: https://github.com/facebook/dataloader
 
@@ -26,6 +26,12 @@ const QueryType = new GraphQLObjectType({
   },
 });
 ```
+
+For a complete examples with usage for both [GraphQL.js][] and [`graphql-tools`][], be sure to check out the [**`./examples` directory**][].
+
+[GraphQL.js]: https://github.com/graphql/graphql-js
+[`graphql-tools`]: https://github.com/apollographql/graphql-tools
+[**`./examples` directory**]: https://github.com/calebmer/graphql-resolve-batch/tree/master/examples
 
 ## Installation
 
