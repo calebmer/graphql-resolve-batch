@@ -192,22 +192,23 @@ describe('createBatchResolver', () => {
     };
 
     return Promise.all([
-      resolve0(null, null, null, { fieldNodes }).then(unexpected, identity),
-      resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
-      resolve2(null, null, null, { fieldNodes }).then(unexpected, identity),
-      resolve3(null, null, null, { fieldNodes }).then(unexpected, identity),
-    ]).then(errors => {
-      expect(errors.map(({ message }) => message)).toEqual([
-        'Must return an array of values from the batch resolver ' +
-          "function. Instead the function returned a '[object Null]'.",
-        'Must return an array of values from the batch resolver ' +
-          "function. Instead the function returned a '[object Number]'.",
-        'Must return an array of values from the batch resolver ' +
-          "function. Instead the function returned a '[object String]'.",
-        'Must return an array of values from the batch resolver ' +
-          "function. Instead the function returned a '[object Object]'.",
-      ]);
-    });
+        resolve0(null, null, null, { fieldNodes }).then(unexpected, identity),
+        resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
+        resolve2(null, null, null, { fieldNodes }).then(unexpected, identity),
+        resolve3(null, null, null, { fieldNodes }).then(unexpected, identity),
+      ])
+      .then(errors => {
+        expect(errors.map(({ message }) => message)).toEqual([
+          'Must return an array of values from the batch resolver ' +
+            "function. Instead the function returned a '[object Null]'.",
+          'Must return an array of values from the batch resolver ' +
+            "function. Instead the function returned a '[object Number]'.",
+          'Must return an array of values from the batch resolver ' +
+            "function. Instead the function returned a '[object String]'.",
+          'Must return an array of values from the batch resolver ' +
+            "function. Instead the function returned a '[object Object]'.",
+        ]);
+      });
   });
 
   it(
@@ -226,30 +227,31 @@ describe('createBatchResolver', () => {
       };
 
       return Promise.all([
-        resolve0(null, null, null, { fieldNodes }).then(unexpected, identity),
-        resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
-        resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
-        resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
-        resolve2(null, null, null, { fieldNodes }).then(unexpected, identity),
-      ]).then(errors => {
-        expect(errors.map(({ message }) => message)).toEqual([
-          'Must return the same number of values from the batch resolver ' +
-            'as there were sources. Expected 1 value(s) but got 0 value(s).',
-          'Must return the same number of values from the batch resolver ' +
-            'as there were sources. Expected 3 value(s) but got 1 value(s).',
-          'Must return the same number of values from the batch resolver ' +
-            'as there were sources. Expected 3 value(s) but got 1 value(s).',
-          'Must return the same number of values from the batch resolver ' +
-            'as there were sources. Expected 3 value(s) but got 1 value(s).',
-          'Must return the same number of values from the batch resolver ' +
-            'as there were sources. Expected 1 value(s) but got 2 value(s).',
-        ]);
-        expect(errors[1]).not.toBe(errors[0]);
-        expect(errors[1]).toBe(errors[1]);
-        expect(errors[1]).toBe(errors[2]);
-        expect(errors[1]).toBe(errors[3]);
-        expect(errors[1]).not.toBe(errors[4]);
-      });
+          resolve0(null, null, null, { fieldNodes }).then(unexpected, identity),
+          resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
+          resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
+          resolve1(null, null, null, { fieldNodes }).then(unexpected, identity),
+          resolve2(null, null, null, { fieldNodes }).then(unexpected, identity),
+        ])
+        .then(errors => {
+          expect(errors.map(({ message }) => message)).toEqual([
+            'Must return the same number of values from the batch resolver ' +
+              'as there were sources. Expected 1 value(s) but got 0 value(s).',
+            'Must return the same number of values from the batch resolver ' +
+              'as there were sources. Expected 3 value(s) but got 1 value(s).',
+            'Must return the same number of values from the batch resolver ' +
+              'as there were sources. Expected 3 value(s) but got 1 value(s).',
+            'Must return the same number of values from the batch resolver ' +
+              'as there were sources. Expected 3 value(s) but got 1 value(s).',
+            'Must return the same number of values from the batch resolver ' +
+              'as there were sources. Expected 1 value(s) but got 2 value(s).',
+          ]);
+          expect(errors[1]).not.toBe(errors[0]);
+          expect(errors[1]).toBe(errors[1]);
+          expect(errors[1]).toBe(errors[2]);
+          expect(errors[1]).toBe(errors[3]);
+          expect(errors[1]).not.toBe(errors[4]);
+        });
     },
   );
 
@@ -267,16 +269,17 @@ describe('createBatchResolver', () => {
     };
 
     return Promise.all([
-      resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
-      resolve(null, null, null, { fieldNodes }).then(unexpected, identity),
-      resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
-      resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
-      resolve(null, null, null, { fieldNodes }).then(unexpected, identity),
-    ]).then(results => {
-      expect(results).toEqual([1, error1, 3, 4, error2]);
-      expect(results[1]).toEqual(error1);
-      expect(results[4]).toEqual(error2);
-    });
+        resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
+        resolve(null, null, null, { fieldNodes }).then(unexpected, identity),
+        resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
+        resolve(null, null, null, { fieldNodes }).then(identity, unexpected),
+        resolve(null, null, null, { fieldNodes }).then(unexpected, identity),
+      ])
+      .then(results => {
+        expect(results).toEqual([1, error1, 3, 4, error2]);
+        expect(results[1]).toEqual(error1);
+        expect(results[4]).toEqual(error2);
+      });
   });
 });
 
