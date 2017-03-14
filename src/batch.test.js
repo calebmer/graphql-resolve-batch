@@ -1,3 +1,5 @@
+import { graphql } from 'graphql';
+import ExampleGraphQLSchema from '../examples/graphql';
 import { createBatchResolver } from './batch';
 
 describe('createBatchResolver', () => {
@@ -40,8 +42,8 @@ describe('createBatchResolver', () => {
 
     const resolve = createBatchResolver(batchResolve);
 
-    const fieldNodes1 = Symbol('fieldNodes');
-    const fieldNodes2 = Symbol('fieldNodes');
+    const fieldNodes1 = [Symbol('fieldNodes')];
+    const fieldNodes2 = [Symbol('fieldNodes')];
 
     return Promise.resolve()
       .then(() => {
@@ -96,7 +98,7 @@ describe('createBatchResolver', () => {
 
     const resolve = createBatchResolver(batchResolve);
 
-    const fieldNodes = Symbol('fieldNodes');
+    const fieldNodes = [Symbol('fieldNodes')];
     const args1 = Symbol('args1');
     const args2 = Symbol('args2');
     const args3 = Symbol('args3');
@@ -123,7 +125,7 @@ describe('createBatchResolver', () => {
 
     const resolve = createBatchResolver(batchResolve);
 
-    const fieldNodes = Symbol('fieldNodes');
+    const fieldNodes = [Symbol('fieldNodes')];
     const context1 = Symbol('context1');
     const context2 = Symbol('context2');
     const context3 = Symbol('context3');
@@ -153,7 +155,7 @@ describe('createBatchResolver', () => {
 
       const resolve = createBatchResolver(batchResolve);
 
-      const fieldNodes = Symbol('fieldNodes');
+      const fieldNodes = [Symbol('fieldNodes')];
       const extra1 = Symbol('extra1');
       const extra2 = Symbol('extra2');
       const extra3 = Symbol('extra3');
@@ -181,7 +183,7 @@ describe('createBatchResolver', () => {
     const resolve2 = createBatchResolver(() => 'Hello, world!');
     const resolve3 = createBatchResolver(() => ({}));
 
-    const fieldNodes = Symbol('fieldNodes');
+    const fieldNodes = [Symbol('fieldNodes')];
 
     const identity = value => value;
     const unexpected = () => {
@@ -216,7 +218,7 @@ describe('createBatchResolver', () => {
       const resolve1 = createBatchResolver(() => [1]);
       const resolve2 = createBatchResolver(() => [1, 2]);
 
-      const fieldNodes = Symbol('fieldNodes');
+      const fieldNodes = [Symbol('fieldNodes')];
 
       const identity = value => value;
       const unexpected = () => {
@@ -258,7 +260,7 @@ describe('createBatchResolver', () => {
 
     const resolve = createBatchResolver(() => [1, error1, 3, 4, error2]);
 
-    const fieldNodes = Symbol('fieldNodes');
+    const fieldNodes = [Symbol('fieldNodes')];
 
     const identity = value => value;
     const unexpected = () => {
@@ -279,3 +281,213 @@ describe('createBatchResolver', () => {
       });
   });
 });
+
+/* eslint-disable no-console */
+describe('examples', () => {
+  const schemas = [{ name: 'GraphQL.js', schema: ExampleGraphQLSchema }];
+
+  let originalConsoleLog;
+
+  beforeAll(() => {
+    originalConsoleLog = console.log;
+    console.log = jest.fn();
+  });
+
+  afterAll(() => {
+    console.log = originalConsoleLog;
+  });
+
+  schemas.forEach(({ name, schema }) => {
+    describe(name, () => {
+      it('will call the batch resolver once for every level', async () => {
+        console.log.mockClear();
+        const query = `
+          {
+            user(id: 5) {
+              friends(limit: 4) {
+                friends(limit: 3) {
+                  friends(limit: 2) {
+                    friends(limit: 1) {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `;
+        const result = await graphql(schema, query);
+        expect(console.log).toHaveBeenCalledTimes(4);
+        expect(result).toEqual({
+          data: {
+            user: {
+              friends: [
+                {
+                  friends: [
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 2 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 10 }, { id: 14 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 2 }, { id: 6 }] },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  friends: [
+                    {
+                      friends: [
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 1 }, { id: 2 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 7 }, { id: 16 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 2 }, { id: 6 }] },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  friends: [
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 2 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 7 }, { id: 16 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 10 }, { id: 14 }] },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  friends: [
+                    {
+                      friends: [
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 1 }, { id: 2 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 7 }, { id: 16 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 1 }, { id: 4 }] },
+                        { friends: [{ id: 1 }, { id: 4 }] },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  friends: [
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 7 }, { id: 16 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 1 }, { id: 6 }] },
+                        { friends: [{ id: 1 }, { id: 5 }] },
+                        { friends: [{ id: 2 }, { id: 6 }] },
+                      ],
+                    },
+                    {
+                      friends: [
+                        { friends: [{ id: 5 }, { id: 6 }] },
+                        { friends: [{ id: 7 }, { id: 10 }] },
+                        { friends: [{ id: 10 }, { id: 14 }] },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        });
+      });
+    });
+  });
+});
+/* eslint-enable no-console */

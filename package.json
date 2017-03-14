@@ -29,7 +29,7 @@
   "scripts": {
     "preversion": "npm run ci",
     "prepublish": "npm run build",
-    "format": "prettier 'src/**/*.js' --write --print-width 80 --tab-width 2 --single-quote --trailing-comma all",
+    "format": "prettier 'src/**/*.js' 'examples/**/*.js' --write --print-width 80 --tab-width 2 --single-quote --trailing-comma all",
     "lint": "eslint 'src/**/*.js'",
     "test": "jest",
     "test-watch": "jest --watch",

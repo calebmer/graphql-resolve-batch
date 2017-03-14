@@ -35,11 +35,15 @@ class Batcher {
    * the batch resolver finishes the `resolve` and `reject` functions will be
    * executed.
    *
-   * We group batches together by `info.fieldNodes`.
+   * We group batches together by the first item in `info.fieldNodes`.
    */
   batch(source, args, context, info, resolve, reject) {
-    const { fieldNodes } = info;
-    let batch = this._batches.get(fieldNodes);
+    // We only use the first field node because the array is reconstructed for
+    // every value. Using only the first node *should not matter*. The nodes
+    // should not get reused and we should not be missing any information from
+    // the other fields.
+    const { fieldNodes: [fieldNode] } = info;
+    let batch = this._batches.get(fieldNode);
 
     // If no batch currently exists for this array of field nodes then we want
     // to create one.
@@ -58,7 +62,7 @@ class Batcher {
         sources: [],
         callbacks: [],
       };
-      this._batches.set(fieldNodes, batch);
+      this._batches.set(fieldNode, batch);
     }
 
     // Add our source and callbacks to the batch.
