@@ -177,7 +177,7 @@ The implementation is very similar to the `dataloader` implementation. Except `g
 
 To see how to optimize the above query with a batch resolver, be sure to check out the [**GraphQL.js example**][].
 
-[**`./examples` directory**]: https://github.com/calebmer/graphql-resolve-batch/blob/master/examples/graphql.js
+[**GraphQL.js example**]: https://github.com/calebmer/graphql-resolve-batch/blob/master/examples/graphql.js
 
 ## When do I use `dataloader` and when do I use `graphql-resolve-batch`?
 
