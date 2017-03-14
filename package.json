@@ -1,6 +1,6 @@
 {
   "name": "graphql-resolve-batch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A GraphQL batching model which groups execution by GraphQL fields.",
   "author": "Caleb Meredith <calebmeredith8@gmail.com>",
   "license": "MIT",
