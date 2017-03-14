@@ -175,9 +175,9 @@ To batch together calls to this function by field, `graphql-resolve-batch` defer
 
 The implementation is very similar to the `dataloader` implementation. Except `graphql-resolve-batch` takes a more opionated approach to how batching should be implemented in GraphQL whereas `dataloader` is less opionated in how it batches executions together.
 
-To see how to optimize the above query with a batch resolver, be sure to check out the [**`./examples` directory**][].
+To see how to optimize the above query with a batch resolver, be sure to check out the [**GraphQL.js example**][].
 
-[**`./examples` directory**]: https://github.com/calebmer/graphql-resolve-batch/tree/master/examples
+[**`./examples` directory**]: https://github.com/calebmer/graphql-resolve-batch/blob/master/examples/graphql.js
 
 ## When do I use `dataloader` and when do I use `graphql-resolve-batch`?
 
