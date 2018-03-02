@@ -49,14 +49,9 @@ class Batcher {
     // to create one.
     if (typeof batch === 'undefined') {
       batch = {
-        // We only use the first set of `args`, `context`, and `info` that we
-        // are passed.
-        //
-        // It is mostly safe to assume that these variables will be the same
-        // for the same `fieldNodes` from the execution implementation.
-        args,
-        context,
-        info,
+        args: [],
+        context: [],
+        info: [],
 
         // We will push our sources and promise callbacks into these arrays.
         sources: [],
@@ -67,6 +62,9 @@ class Batcher {
 
     // Add our source and callbacks to the batch.
     batch.sources.push(source);
+    batch.args.push(args);
+    batch.context.push(context);
+    batch.info.push(info);
     batch.callbacks.push({ resolve, reject });
 
     // Schedule a resolve if none has already been scheduled.
