@@ -58,7 +58,7 @@ GraphQL is a powerful data querying language for both frontend and backend devel
 }
 ```
 
-This demonstrates the power of GraphQL to select arbitrarily nested data. Yet it is a difficult pattern to optimize from the schema developer’s perspective. If we naïvely translate this GraphQL query into say, SQL, we get the following psudo queries:
+This demonstrates the power of GraphQL to select arbitrarily nested data. Yet it is a difficult pattern to optimize from the schema developer’s perspective. If we naïvely translate this GraphQL query into say, SQL, we get the following pseudo queries:
 
 ```
 Select the first 5 users.
